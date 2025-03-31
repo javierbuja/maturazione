@@ -4,7 +4,8 @@ using System.Collections; // Importante per le Coroutine
 public class Enemy : MonoBehaviour
 {
     [SerializeField] int maxHealth = 100;
-    [SerializeField] float speed = 2f;
+    [SerializeField] float originalSpeed = 5f; // Velocità originale del nemico
+    [SerializeField] float speed; // Velocità attuale del nemico
 
     private int currentHealth;
 
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
             Debug.LogError("⚠️ Player non trovato! Assicurati che abbia il tag 'Player'.");
         }
 
+        speed = originalSpeed; // Imposta la velocità iniziale
         StartCoroutine(AutoDamage()); // Inizia il danno automatico ogni secondo
     }
 
@@ -48,16 +50,27 @@ public class Enemy : MonoBehaviour
         if (currentHealth <= 0)
         {
             StopAllCoroutines(); // Ferma il danno automatico se il nemico muore
-            Destroy(gameObject);
+            Destroy(gameObject); // Distrugge il nemico
         }
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 
     IEnumerator AutoDamage()
     {
         while (currentHealth > 0)
         {
-            Hit(20);
+            Hit(20); // Infligge 20 danni ogni secondo
             yield return new WaitForSeconds(1f); // Aspetta 1 secondo prima di infliggere nuovamente danno
         }
+    }
+
+    // Metodo per resettare la velocità del nemico
+    public void ResetSpeed()
+    {
+        speed = originalSpeed; // Ripristina la velocità originale
     }
 }

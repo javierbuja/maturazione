@@ -1,6 +1,5 @@
 ﻿using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +16,10 @@ public class Player : MonoBehaviour
     [SerializeField] float sprintDuration = 1f;
     [SerializeField] float sprintCooldown = 5f;
 
+    [SerializeField] GameObject laghettoPrefab;
+    [SerializeField] float spawnInterval = 0.2f;
+    private float spawnTimer = 0f;
+
     int maxHealth = 100;
     int currentHealth;
 
@@ -28,14 +31,16 @@ public class Player : MonoBehaviour
     float moveHorizontal, moveVertical;
     Vector2 movement;
 
-    int facingDirection = 1; // 1 = right, -1 = left
-    private TMP_Text HealthText;
+    int facingDirection = 1;
 
+    [SerializeField] private AudioClip sprintSound;
+    private AudioSource audioSource;
 
     private void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
 
         currentHealth = maxHealth;
         healthText.text = maxHealth.ToString();
@@ -43,8 +48,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
-
         if (dead)
         {
             movement = Vector2.zero;
@@ -64,10 +67,26 @@ public class Player : MonoBehaviour
 
         transform.localScale = new Vector2(facingDirection, 1);
 
-        // Sprint timer logic
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
+        {
+            Hit(10);
+            if (sprintSound != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(sprintSound);
+            }
+        }
+
         if (Input.GetKey(KeyCode.LeftShift) && canSprint)
         {
             sprintTimer += Time.deltaTime;
+            spawnTimer += Time.deltaTime;
+
+            if (spawnTimer >= spawnInterval)
+            {
+                Instantiate(laghettoPrefab, transform.position, Quaternion.identity);
+                spawnTimer = 0f;
+            }
+
             if (sprintTimer >= sprintDuration)
             {
                 canSprint = false;
@@ -78,7 +97,6 @@ public class Player : MonoBehaviour
         else if (!canSprint)
         {
             cooldownTimer -= Time.deltaTime;
-
             CooldownSlider.value = 1 - (cooldownTimer / sprintCooldown);
             if (cooldownTimer <= 0)
             {
@@ -88,6 +106,7 @@ public class Player : MonoBehaviour
         else
         {
             sprintTimer = 0f;
+            spawnTimer = 0f;
         }
     }
 
@@ -117,6 +136,14 @@ public class Player : MonoBehaviour
     void Die()
     {
         dead = true;
-        // Call GameOver
+        GameManager.instance.GameOver();
+    }
+
+    public void Heal(float amount)
+    {
+        if (dead) return;
+
+        currentHealth = Mathf.Min(currentHealth + (int)amount, maxHealth);
+        healthText.text = currentHealth.ToString();
     }
 }
