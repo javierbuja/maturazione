@@ -36,6 +36,11 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioClip sprintSound;
     private AudioSource audioSource;
 
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -123,7 +128,7 @@ public class Player : MonoBehaviour
             Hit(20);
     }
 
-    void Hit(int damage)
+    public void Hit(int damage)
     {
         anim.SetTrigger("hit");
         currentHealth -= damage;

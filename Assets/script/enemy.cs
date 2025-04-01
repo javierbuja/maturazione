@@ -5,18 +5,21 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] int maxHealth = 100;
     [SerializeField] float originalSpeed = 5f; // Velocità originale del nemico
+    [SerializeField] float boostedSpeed = 20f; // Velocità aumentata nel trigger
     [SerializeField] float speed; // Velocità attuale del nemico
 
     private int currentHealth;
-
     Animator anim;
     Transform target; // Bersaglio da seguire
+    private Transform bait; // Riferimento all'oggetto esca
+    private bool isAttractedToBait = false; // Flag per sapere se sta seguendo l'esca
 
     private void Start()
     {
         currentHealth = maxHealth;
         target = GameObject.FindWithTag("Player")?.transform;
         anim = GetComponent<Animator>();
+        bait = GameObject.FindWithTag("Bait")?.transform; // Cerca l'esca
 
         if (target == null)
         {
@@ -29,16 +32,18 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (target != null)
+        Transform currentTarget = isAttractedToBait && bait != null ? bait : target;
+
+        if (currentTarget != null)
         {
-            Vector3 direction = target.position - transform.position;
+            Vector3 direction = currentTarget.position - transform.position;
             direction.Normalize();
 
             transform.position += direction * speed * Time.deltaTime;
 
-            // Gira il nemico verso il player
-            var playerToTheRight = target.position.x > transform.position.x;
-            transform.localScale = new Vector2(playerToTheRight ? 1 : -1, 1);
+            // Gira il nemico verso il bersaglio attuale
+            var targetToTheRight = currentTarget.position.x > transform.position.x;
+            transform.localScale = new Vector2(targetToTheRight ? 1 : -1, 1);
         }
     }
 
@@ -68,9 +73,43 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Metodo per resettare la velocità del nemico
     public void ResetSpeed()
     {
         speed = originalSpeed; // Ripristina la velocità originale
+    }
+
+    // Metodo per attirare il nemico verso l'esca
+    public void AttractToBait(Transform baitTransform, float duration)
+    {
+        bait = baitTransform;
+        isAttractedToBait = true;
+        StartCoroutine(StopAttractingAfterTime(duration));
+    }
+
+    private IEnumerator StopAttractingAfterTime(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isAttractedToBait = false;
+    }
+
+    // Metodo per aumentare la velocità quando entra nel trigger
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"Entrato nel trigger: {other.gameObject.name}");
+        if (other.CompareTag("SpeedBoostZone"))
+        {
+            Debug.Log("Velocità aumentata!");
+            speed = boostedSpeed;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        Debug.Log($"Uscito dal trigger: {other.gameObject.name}");
+        if (other.CompareTag("SpeedBoostZone"))
+        {
+            Debug.Log("Velocità ripristinata!");
+            speed = originalSpeed;
+        }
     }
 }

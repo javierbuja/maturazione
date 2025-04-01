@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 8761987553940411554}
   - component: {fileID: 8843215548663707522}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: enemy no IA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -562,14 +562,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6075014418184094572}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ea0d509d474d2c4aaa26561dce5f09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
   originalSpeed: 5
-  boostedSpeed: 9
+  boostedSpeed: 20
   speed: 4.5
 --- !u!95 &8843215548663707522
 Animator:

@@ -471,7 +471,7 @@ GameObject:
   - component: {fileID: 8761987553940411554}
   - component: {fileID: 8843215548663707522}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy veloce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,9 +568,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  originalSpeed: 5
-  boostedSpeed: 9
-  speed: 4.5
+  originalSpeed: 7
+  boostedSpeed: 20
+  speed: 7
 --- !u!95 &8843215548663707522
 Animator:
   serializedVersion: 5
