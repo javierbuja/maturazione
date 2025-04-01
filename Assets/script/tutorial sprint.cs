@@ -5,7 +5,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab; // Prefab del nemico da spawnare
     [SerializeField] private Transform player; // Riferimento al player
-    [SerializeField] private float spawnOffset = 2f; // Distanza di spawn a sinistra del player
+    [SerializeField] private float spawnOffset = 5f; // Distanza di spawn a sinistra del player
     private bool hasSpawned = false; // Controlla se il nemico è già stato spawnato
 
     private void OnTriggerEnter2D(Collider2D other)
