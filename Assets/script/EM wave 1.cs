@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;
-    [SerializeField] float timeBetweenSpawns = 0.5f;
+    [SerializeField] float timeBetweenSpawns = 100f;
     float currentTimeBetweenSpawns;
 
     Transform enemiesParent;
@@ -33,17 +33,19 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-    Vector2 RandomPosiotion() { 
-         return new Vector2(Random.Range(-35, 35), Random.Range(-25, 25));
+    Vector2 RandomPosiotion()
+    {
+        return new Vector2(Random.Range(-35, 35), Random.Range(-25, 25));
     }
-    void SpawnEnemy() { 
-        var e =Instantiate(enemyPrefab, RandomPosiotion(), Quaternion.identity);
+    void SpawnEnemy()
+    {
+        var e = Instantiate(enemyPrefab, RandomPosiotion(), Quaternion.identity);
         e.transform.SetParent(enemiesParent);
     }
 
     public void DestroyAllEnemies()
     {
-        foreach(Transform e in enemiesParent)
+        foreach (Transform e in enemiesParent)
             Destroy(e.gameObject);
     }
-}   
+}
