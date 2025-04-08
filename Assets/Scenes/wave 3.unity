@@ -1002,32 +1002,16 @@ GameObject:
   m_Component:
   - component: {fileID: 205471853}
   - component: {fileID: 205471852}
-  - component: {fileID: 205471851}
   - component: {fileID: 205471850}
   - component: {fileID: 205471849}
   - component: {fileID: 205471848}
-  - component: {fileID: 205471847}
   m_Layer: 0
   m_Name: deh
-  m_TagString: Bait
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &205471847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 205471846}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e1230cf4af4e604392c856a16c01e0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  escaPrefab: {fileID: 205471846}
-  baitDuration: 5
 --- !u!58 &205471848
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1129,18 +1113,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.31557116, y: 0.42902088}
   m_EdgeRadius: 0
---- !u!114 &205471851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 205471846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096d283d3542c894abccdb167b7feadb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &205471852
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1813,7 +1785,7 @@ GameObject:
   - component: {fileID: 348938781}
   m_Layer: 0
   m_Name: barile smegmatox
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10766,11 +10738,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e03d5756592d6d45913ff8846bd55f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeText: {fileID: 677621855}
-  waveText: {fileID: 593645064}
-  waveRunning: 0
-  currentWave: 0
-  currentWaveTime: 0
+  enemyPrefab: {fileID: 6075014418184094572, guid: 07f120fe1e04bd547a945252f0e6bb16, type: 3}
+  timeBetweenSpawns: 1
 --- !u!114 &1587910457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10778,7 +10747,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587910454}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d1d2c41154cc1e48ba9193a43a10812, type: 3}
   m_Name: 

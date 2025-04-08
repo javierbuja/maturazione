@@ -17,9 +17,9 @@ public class tutorialcura : MonoBehaviour
     {
         if (hasEntered)
         {
-            if (player.GetCurrentHealth() == 100 && staccion != null) //controlla la vita del player (FALLO TE, PUZZOLENTE)
+            if (player.GetCurrentHealth() == 100 && staccion != null) //controlla la vita del player 
             {
-                Destroy(staccion); //distrugge la staccionata (FALLO TE, PUZZOLENTE)
+                Destroy(staccion); //distrugge la staccionata 
             }
         }
     }
