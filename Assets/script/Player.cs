@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
 
         currentHealth = maxHealth;
         healthText.text = maxHealth.ToString();
+
+        cooldownTimer = sprintCooldown;
     }
 
     private void Update()
@@ -72,18 +74,19 @@ public class Player : MonoBehaviour
 
         transform.localScale = new Vector2(facingDirection, 1);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canSprint)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && cooldownTimer == sprintCooldown)
         {
             Hit(10);
             if (sprintSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(sprintSound);
             }
+
+            canSprint = true;
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && canSprint)
         {
-            sprintTimer += Time.deltaTime;
             spawnTimer += Time.deltaTime;
 
             if (spawnTimer >= spawnInterval)
@@ -92,27 +95,21 @@ public class Player : MonoBehaviour
                 spawnTimer = 0f;
             }
 
-            if (sprintTimer >= sprintDuration)
+            cooldownTimer = Mathf.Clamp(cooldownTimer - Time.deltaTime, 0.0f, sprintCooldown);
+
+            if (cooldownTimer == 0.0f)
             {
                 canSprint = false;
-                sprintTimer = 0f;
-                cooldownTimer = sprintCooldown;
-            }
-        }
-        else if (!canSprint)
-        {
-            cooldownTimer -= Time.deltaTime;
-            CooldownSlider.value = 1 - (cooldownTimer / sprintCooldown);
-            if (cooldownTimer <= 0)
-            {
-                canSprint = true;
             }
         }
         else
         {
-            sprintTimer = 0f;
+            canSprint = false;
             spawnTimer = 0f;
+            cooldownTimer = Mathf.Clamp(cooldownTimer+Time.deltaTime, 0.0f, sprintCooldown);
         }
+
+        CooldownSlider.value = (cooldownTimer / sprintCooldown);
     }
 
     private void FixedUpdate()

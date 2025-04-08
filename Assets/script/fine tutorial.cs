@@ -14,7 +14,7 @@ public class SceneChangerOnTrigger : MonoBehaviour
 
     IEnumerator ChangeSceneAfterDelay()
     {
-        yield return new WaitForSeconds(1f); // Aspetta 1 secondo
+        yield return new WaitForSeconds(0.1f); // Aspetta 1 secondo
         SceneManager.GetSceneByName("wave 1"); // Carica la scena chiamata "wave 1"
         SceneManager.LoadScene("wave 1");
     }
