@@ -8,6 +8,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] float boostedSpeed = 20f; // Velocità aumentata nel trigger
     [SerializeField] float speed; // Velocità attuale del nemico
 
+    [Header("Stats")]
+    [Header("Charger")]
+    [SerializeField] bool isCharger;
+    [SerializeField] float distanceToCharge = 5f;
+    [SerializeField] float chargeSpeed = 12f;
+    [SerializeField] float prepareTime;
+
+    bool isCharging = false;
+    bool isPreparingCharge = false;
+
     private int currentHealth;
     Animator anim;
     Transform target; // Bersaglio da seguire
@@ -34,6 +44,8 @@ public class Enemy : MonoBehaviour
     {
         Transform currentTarget = isAttractedToBait && bait != null ? bait : target;
 
+        if (isPreparingCharge) return;
+
         if (currentTarget != null)
         {
             Vector3 direction = currentTarget.position - transform.position;
@@ -44,7 +56,21 @@ public class Enemy : MonoBehaviour
             // Gira il nemico verso il bersaglio attuale
             var targetToTheRight = currentTarget.position.x > transform.position.x;
             transform.localScale = new Vector2(targetToTheRight ? 1 : -1, 1);
+
+            if (isCharger && isCharging && Vector2.Distance(transform.transform.position, target.position) < distanceToCharge)
+            {
+                isPreparingCharge = true;
+                Invoke("StartCharging", prepareTime);
+
+            }
         }
+    }
+
+    void StartCharging()
+    { 
+     isPreparingCharge = false;
+     isCharging = true;
+        speed = chargeSpeed;
     }
 
     public void Hit(int damage)

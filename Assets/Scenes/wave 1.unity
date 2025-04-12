@@ -9011,8 +9011,8 @@ MonoBehaviour:
   CooldownSlider: {fileID: 670309094}
   moveSpeed: 6.7
   sprintSpeed: 15
-  sprintDuration: 0.6
-  sprintCooldown: 4.5
+  sprintCooldown: 0.5
+  sprintRechargeRate: 0.2
   laghettoPrefab: {fileID: 827898513392787752, guid: d4a70c424e9e6dd42b70087f3e9284dc, type: 3}
   spawnInterval: 0.08
   sprintSound: {fileID: 8300000, guid: c4cf4d4960f2243458628c431bac49ab, type: 3}
@@ -12946,7 +12946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6075014418184094572, guid: 07f120fe1e04bd547a945252f0e6bb16, type: 3}
-  timeBetweenSpawns: 1.1
+  timeBetweenSpawns: 0.7
 --- !u!1 &1902571232
 GameObject:
   m_ObjectHideFlags: 0

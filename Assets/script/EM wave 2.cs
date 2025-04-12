@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class EnemyManagerWave2 : MonoBehaviour
 {
+   
     [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject chargerPrefab;
     [SerializeField] float timeBetweenSpawns = 0.5f;
+
+
+
     float currentTimeBetweenSpawns;
 
     Transform enemiesParent;
+    Transform target;
 
     public static EnemyManagerWave2 Instance;
 
@@ -22,6 +28,7 @@ public class EnemyManagerWave2 : MonoBehaviour
     private void Start()
     {
         enemiesParent = GameObject.Find("Enemies").transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform; // Aggiunto per evitare errore
     }
 
     private void Update()
@@ -33,18 +40,31 @@ public class EnemyManagerWave2 : MonoBehaviour
         {
             SpawnEnemy();
             currentTimeBetweenSpawns = timeBetweenSpawns;
+
+
         }
-    }
 
-    Vector2 RandomPosition()
-    {
-        return new Vector2(Random.Range(-30, 30), Random.Range(-20, 20));
-    }
+        Vector2 RandomPosition()
+        {
+            return new Vector2(Random.Range(-30, 30), Random.Range(-20, 20));
+        }
 
-    void SpawnEnemy()
-    {
-        var e = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
-        e.transform.SetParent(enemiesParent);
+        void SpawnEnemy()
+        {
+            var roll = Random.Range(0, 100);
+            var enemyType = roll < 90 ? enemyPrefab : chargerPrefab;
+
+            var e = Instantiate(enemyType, RandomPosition(), Quaternion.identity);
+            e.transform.SetParent(enemiesParent);
+        }
+
+        void StartCharging()
+        {
+
+
+            // Aggiungi qui la logica di movimento per il nemico se serve
+            // Ad esempio: enemyAI.SetSpeed(chargeSpeed);
+        }
     }
 
     public void DestroyAllEnemies()

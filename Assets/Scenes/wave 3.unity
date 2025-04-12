@@ -10703,7 +10703,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1587910455}
   - component: {fileID: 1587910457}
-  - component: {fileID: 1587910456}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -10726,7 +10725,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 870516686}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1587910456
+--- !u!114 &1587910457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10735,24 +10734,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1587910454}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e03d5756592d6d45913ff8846bd55f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6075014418184094572, guid: 07f120fe1e04bd547a945252f0e6bb16, type: 3}
-  timeBetweenSpawns: 1
---- !u!114 &1587910457
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1587910454}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d1d2c41154cc1e48ba9193a43a10812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6075014418184094572, guid: 07f120fe1e04bd547a945252f0e6bb16, type: 3}
+  chargerPrefab: {fileID: 6075014418184094572, guid: e020bf70b4bc8b8499149fd73a13611c, type: 3}
   timeBetweenSpawns: 0.7
 --- !u!1 &1601510533
 GameObject:
@@ -12454,8 +12440,8 @@ MonoBehaviour:
   CooldownSlider: {fileID: 1201960589}
   moveSpeed: 6.7
   sprintSpeed: 15
-  sprintDuration: 0.6
-  sprintCooldown: 4.5
+  sprintCooldown: 0.5
+  sprintRechargeRate: 0.2
   laghettoPrefab: {fileID: 827898513392787752, guid: d4a70c424e9e6dd42b70087f3e9284dc, type: 3}
   spawnInterval: 0.08
   sprintSound: {fileID: 8300000, guid: c4cf4d4960f2243458628c431bac49ab, type: 3}

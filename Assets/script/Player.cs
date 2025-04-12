@@ -13,8 +13,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] float moveSpeed = 6;
     [SerializeField] float sprintSpeed = 10;
-    [SerializeField] float sprintDuration = 1f;
-    [SerializeField] float sprintCooldown = 5f;
+    [SerializeField] float sprintCooldown = 2f;
+    [SerializeField] float sprintRechargeRate = 0.5f;
 
     [SerializeField] GameObject laghettoPrefab;
     [SerializeField] float spawnInterval = 0.2f;
@@ -25,7 +25,6 @@ public class Player : MonoBehaviour
 
     bool dead = false;
     bool canSprint = true;
-    float sprintTimer = 0f;
     float cooldownTimer = 0f;
 
     float moveHorizontal, moveVertical;
@@ -50,7 +49,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthText.text = maxHealth.ToString();
 
-        cooldownTimer = sprintCooldown;
+        cooldownTimer = sprintCooldown; 
     }
 
     private void Update()
@@ -66,7 +65,6 @@ public class Player : MonoBehaviour
         moveVertical = Input.GetAxisRaw("Vertical");
 
         movement = new Vector2(moveHorizontal, moveVertical).normalized;
-
         anim.SetFloat("velocity", movement.magnitude);
 
         if (movement.x != 0)
@@ -74,18 +72,18 @@ public class Player : MonoBehaviour
 
         transform.localScale = new Vector2(facingDirection, 1);
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && cooldownTimer == sprintCooldown)
+        bool isHoldingShift = Input.GetKey(KeyCode.LeftShift);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && cooldownTimer >= sprintCooldown)
         {
             Hit(10);
             if (sprintSound != null && audioSource != null)
-            {
                 audioSource.PlayOneShot(sprintSound);
-            }
 
             canSprint = true;
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && canSprint)
+        if (isHoldingShift && canSprint)
         {
             spawnTimer += Time.deltaTime;
 
@@ -95,21 +93,30 @@ public class Player : MonoBehaviour
                 spawnTimer = 0f;
             }
 
-            cooldownTimer = Mathf.Clamp(cooldownTimer - Time.deltaTime, 0.0f, sprintCooldown);
-
-            if (cooldownTimer == 0.0f)
+            cooldownTimer -= Time.deltaTime;
+            if (cooldownTimer <= 0f)
             {
+                cooldownTimer = 0f;
                 canSprint = false;
             }
         }
         else
         {
-            canSprint = false;
             spawnTimer = 0f;
-            cooldownTimer = Mathf.Clamp(cooldownTimer+Time.deltaTime, 0.0f, sprintCooldown);
+
+            if (cooldownTimer < sprintCooldown)
+            {
+                cooldownTimer += Time.deltaTime * sprintRechargeRate;
+
+                if (cooldownTimer >= sprintCooldown)
+                {
+                    cooldownTimer = sprintCooldown;
+                    canSprint = true;
+                }
+            }
         }
 
-        CooldownSlider.value = (cooldownTimer / sprintCooldown);
+        CooldownSlider.value = cooldownTimer / sprintCooldown;
     }
 
     private void FixedUpdate()

@@ -2598,8 +2598,8 @@ MonoBehaviour:
   CooldownSlider: {fileID: 1971298900}
   moveSpeed: 6
   sprintSpeed: 15
-  sprintDuration: 0.6
-  sprintCooldown: 4.5
+  sprintCooldown: 0.5
+  sprintRechargeRate: 0.2
   laghettoPrefab: {fileID: 827898513392787752, guid: d4a70c424e9e6dd42b70087f3e9284dc, type: 3}
   spawnInterval: 0.08
   sprintSound: {fileID: 8300000, guid: c4cf4d4960f2243458628c431bac49ab, type: 3}
