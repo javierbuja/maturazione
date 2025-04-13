@@ -52,7 +52,7 @@ public class EnemyManagerWave2 : MonoBehaviour
         void SpawnEnemy()
         {
             var roll = Random.Range(0, 100);
-            var enemyType = roll < 90 ? enemyPrefab : chargerPrefab;
+            var enemyType = roll < 80 ? enemyPrefab : chargerPrefab;
 
             var e = Instantiate(enemyType, RandomPosition(), Quaternion.identity);
             e.transform.SetParent(enemiesParent);

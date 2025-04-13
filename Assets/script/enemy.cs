@@ -57,7 +57,7 @@ public class Enemy : MonoBehaviour
             var targetToTheRight = currentTarget.position.x > transform.position.x;
             transform.localScale = new Vector2(targetToTheRight ? 1 : -1, 1);
 
-            if (isCharger && isCharging && Vector2.Distance(transform.transform.position, target.position) < distanceToCharge)
+            if (isCharger && !isCharging && Vector2.Distance(transform.position, target.position) < distanceToCharge)
             {
                 isPreparingCharge = true;
                 Invoke("StartCharging", prepareTime);
@@ -68,8 +68,8 @@ public class Enemy : MonoBehaviour
 
     void StartCharging()
     { 
-     isPreparingCharge = false;
-     isCharging = true;
+        isPreparingCharge = false;
+        isCharging = true;
         speed = chargeSpeed;
     }
 

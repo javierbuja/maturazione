@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 12
   m_Sprite: {fileID: 1475381651, guid: 00f5d84a2acf7b34cb0a337c4c841a84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -482,14 +482,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea0d509d474d2c4aaa26561dce5f09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 180
   originalSpeed: 5
   boostedSpeed: 9
   speed: 4.5
   isCharger: 1
-  distanceToCharge: 5
-  chargeSpeed: 12
-  prepareTime: 0
+  distanceToCharge: 7
+  chargeSpeed: 10
+  prepareTime: 1.5
 --- !u!95 &8843215548663707522
 Animator:
   serializedVersion: 5
