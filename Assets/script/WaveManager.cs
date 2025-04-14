@@ -1,11 +1,18 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
+using UnityEngine.UI;
 
 public class waveManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] TextMeshProUGUI waveText;
+
+    [Header("UI Fine Ondata")]
+    [SerializeField] GameObject waveEndUI;
+    [SerializeField] Button nextWaveButton;
+    [SerializeField] string nextSceneName = "wave 2";
 
     public static waveManager Instance;
 
@@ -16,16 +23,19 @@ public class waveManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
+
+        if (nextWaveButton != null)
+            nextWaveButton.onClick.AddListener(LoadNextScene);
     }
 
     private void Start()
     {
         StartNewWave();
+        if (waveEndUI != null) waveEndUI.SetActive(false);
     }
 
     private void Update()
     {
-        // testing
         if (Input.GetKeyDown(KeyCode.R))
             StartNewWave();
     }
@@ -42,11 +52,10 @@ public class waveManager : MonoBehaviour
         waveText.text = "Wave:" + currentWave;
         StartCoroutine(WaveTimer());
 
-        // Start internal wave on EnemyManagerWave2 (if it exists)
         if (EnemyManagerWave2.Instance != null)
-        {
             EnemyManagerWave2.WaveManager.StartWave();
-        }
+
+        if (waveEndUI != null) waveEndUI.SetActive(false);
     }
 
     IEnumerator WaveTimer()
@@ -68,7 +77,6 @@ public class waveManager : MonoBehaviour
     {
         StopAllCoroutines();
 
-        // Destroy enemies in both managers if they exist
         if (EnemyManager.Instance != null)
             EnemyManager.Instance.DestroyAllEnemies();
 
@@ -82,5 +90,12 @@ public class waveManager : MonoBehaviour
         currentWaveTime = 30;
         timeText.text = currentWaveTime.ToString();
         timeText.color = Color.red;
+
+        if (waveEndUI != null) waveEndUI.SetActive(true);
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene(nextSceneName);
     }
 }
